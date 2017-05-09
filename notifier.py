@@ -34,6 +34,7 @@ api_key = config['email account']['api-key']
 
 website = requests.get(URL).text
 number_of_entries = len(re.findall(matriculation, website))
+print('Anzahl der Einträge ' + str(number_of_entries))
 with open('history.log', 'r') as f:
     last_number_of_entries = int(f.read())
 with open('history.log', 'w') as f:
