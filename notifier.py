@@ -10,12 +10,12 @@ import configparser
 
 URL = 'https://www.tu-braunschweig.de/fmb/aktuellestermine/termine#Zeugnisausgabe'
     
-def send_notification(text, email, recepient, api_key):
+def send_notification(text, email, recipient, api_key):
     p = requests.post(
         "https://api.mailgun.net/v3/sandboxf9f20535651b426ab55ebc05468cd3f1.mailgun.org/messages",
         auth=("api", api_key),
         data={"from": "Mailgun Sandbox <postmaster@sandboxf9f20535651b426ab55ebc05468cd3f1.mailgun.org>",
-              "to": recepient + ' <' + email + '>',
+              "to": recipient + ' <' + email + '>',
               "subject": "Zeugnisausgabe: Statusänderung",
               "text": text}
         )
@@ -29,7 +29,7 @@ config.read('credentials.ini')
 
 matriculation = config['student account']['matriculation-number']
 email = config['email account']['email']
-recepient = config['email account']['recepient']
+recipient = config['email account']['recipient']
 api_key = config['email account']['api-key']
 
 website = requests.get(URL).text
@@ -47,6 +47,6 @@ if number_of_entries and number_of_entries != last_number_of_entries:
     else:
         mailtext = 'Das Zeugnis wurde korrigiert und liegt zur Abholung bereit'
         print('Certificate corrected')
-    send_notification(mailtext, email, recepient, api_key)
+    send_notification(mailtext, email, recipient, api_key)
 else:
     print('No changes since last execution')
