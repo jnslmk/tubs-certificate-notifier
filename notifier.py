@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Spyder Editor
-
-This is a temporary script file.
-"""
-import requests
 import re
 import configparser
 
 URL = 'https://www.tu-braunschweig.de/fmb/aktuellestermine/termine#Zeugnisausgabe'
-    
+
+
 def send_notification(text, email, recipient, api_key):
     p = requests.post(
         "https://api.mailgun.net/v3/sandboxf9f20535651b426ab55ebc05468cd3f1.mailgun.org/messages",
@@ -18,11 +13,12 @@ def send_notification(text, email, recipient, api_key):
               "to": recipient + ' <' + email + '>',
               "subject": "Zeugnisausgabe: Statusänderung",
               "text": text}
-        )
+    )
     if p.status_code == 200:
         print('Sent email successfully')
     else:
         print('Email sending not successful')
+
 
 config = configparser.ConfigParser()
 config.read('credentials.ini')
